@@ -69,26 +69,41 @@ k = 10
 You can implement the solution by simulating the growth of the string or using a mathematical approach to find the k-th character directly without building the entire string.
 
 ```python
-def findKthCharacter(k: int) -> str:
-    # The initial string is "a"
-    current_length = 1  # The length of the initial string "a"
-    current_char = 'a'  # Start with 'a'
+#include <stdio.h>
+#include <stdlib.h>
+
+char kthCharacter(int k) {
+    char a = 'a';
+    int size = 1;
+    char* b = (char*)malloc(sizeof(char));
     
-    # Continue expanding until the length is greater than or equal to k
-    while current_length < k:
-        current_length = 2 * current_length  # The string doubles in size each time
-    
-    # Find the character corresponding to the k-th position
-    index = k - 1  # Convert to 0-based index
-    while current_length > 1:
-        mid = current_length // 2
-        if index >= mid:
-            # If the index is in the second half, adjust the index and continue
-            index -= mid
-        current_length = mid
-    
-    # Return the character at the final index
-    return chr((ord(current_char) + index - ord('a')) % 26 + ord('a'))
+    if (!b) { // Handle memory allocation failure
+        return '\0';
+    }
+
+    *b = a;
+
+    // Generate the sequence until size is large enough
+    while (size < k) {
+        int old_size = size;
+        size *= 2;
+
+        b = (char*)realloc(b, size * sizeof(char));
+        if (!b) { // Handle realloc failure
+            return '\0';
+        }
+
+        // Update the second half of the array
+        for (int j = 0; j < old_size; j++) {
+            b[j + old_size] = b[j] + 1;
+        }
+    }
+
+    // Return the k-th character (0-based index, so b[k-1] for 1-based index)
+    char result = b[k - 1];
+    free(b); // Free the allocated memory
+    return result;
+}
 ```
 
 ## Conclusion
