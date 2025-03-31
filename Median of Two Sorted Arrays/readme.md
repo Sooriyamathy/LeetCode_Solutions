@@ -56,6 +56,3 @@ Median: 2.500000
 
 ## License
 This project is open-source and available under the MIT License.
-
-## Author
-**Sooriya Mathy**
